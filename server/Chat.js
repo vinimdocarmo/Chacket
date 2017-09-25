@@ -24,13 +24,64 @@ module.exports = class Chat {
         this.users.push(user);
     }
 
-    handleMessage(user, data) {
-        const message = JSON.parse(data);
-        
-        this.findRoom(message.room).users.forEach(function (currUser) {
-            if (currUser !== user) {
-                currUser.socket.write(data);
+    handleMessage(user, buffer) {
+        const data = JSON.parse(buffer);
+
+        switch (data.type) {
+            case 'end':
+                this.removeUser(user);
+                break;
+            case 'start':
+                this.onStartConnection(user, data);
+                break;
+            case 'message':
+                this.broadcast(user, data);
+                break;
+            case 'username':
+                this.user.setUsername(data.username);
+        }
+    }
+
+    broadcast(user, data) {
+        try {
+            this.findRoom(data.room).users.forEach(function (currUser) {
+                currUser.socket.write(JSON.stringify(data));
+            });
+        } catch(error) {
+            console.error('Error tryng to broadcast a message to all users');
+            console.error(error);
+        }
+    }
+
+    removeUser(user) {
+        const uIndex = _.findIndex(this.users, currUser =>  currUser.username === user.username);
+
+        if (uIndex !== -1) {
+            this.users.splice(uIndex, 1);
+        }
+
+        this.rooms.forEach(room => room.removeUser(user));
+
+        let address = user.socket.address();
+        console.log(`Socket from address ${address.address}:${address.port} has ended connection`);
+    }
+
+    onStartConnection(user, data) {
+        user.setUsername(data.username);
+
+        this.users.forEach(currUser => {
+            if (user !== currUser) {
+                try {
+                    currUser.socket.write(JSON.stringify({ type: 'start', usernames: [data.username] }));
+                } catch(error) {
+                    console.error('Erro tryng do notify clients about new connection');
+                    console.error(error);
+                }
             }
         });
+
+        const allUsernamesButMine = this.users.filter(currUser => currUser !== user).map(user => user.username);
+
+        user.socket.write(JSON.stringify({ type: 'start', usernames: allUsernamesButMine }));
     }
 };

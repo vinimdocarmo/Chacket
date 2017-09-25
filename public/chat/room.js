@@ -13,14 +13,18 @@
                     this.getRoomName = function () { return '#' + $scope.name; };
 
                     this.send = function () {
-                        ClientSession.get().write(JSON.stringify({ room: 'general', text: this.text, username: ClientSession.get().username }));
+                        ClientSession.get().send({
+                            type: 'message',
+                            room: 'general', 
+                            text: this.text
+                        });
                         this.text = '';
                     };
 
                     ClientSession.get().on('data', buffer => {
                         $timeout(() => {
                             const data = JSON.parse(buffer);
-                            if (data.room !== $scope.name) {
+                            if (data.type !== 'message' || data.room !== $scope.name) {
                                 return;
                             }
                             $scope.messages.push({ room: $scope.name, text: data.text, username: data.username });

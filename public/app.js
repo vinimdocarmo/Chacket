@@ -1,9 +1,10 @@
 (function () {
     angular
         .module('chacketApp', ['ngRoute'])
-        .controller('AppController', function ($window) {
+        .controller('AppController', function ($window, ClientSession) {
             $window.onbeforeunload = function() {
-                //sessionStorage.setItem('chatClient', null);
+                ClientSession.get().send(JSON.stringify({ type: 'end' }));
+                ClientSession.set(null);
             };
         })
         .config(function($routeProvider, $locationProvider) {

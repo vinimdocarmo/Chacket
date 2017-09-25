@@ -15,6 +15,11 @@
                 connectToChatServer() {
                     return new Promise((resolve) => this.connect({ port: 3333, host: 'localhost' }, resolve));
                 }
+
+                send(data) {
+                    data = Object.assign(data, { username: this.username });
+                    super.write(JSON.stringify(data));
+                }
             };
         });
 })();
