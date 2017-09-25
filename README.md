@@ -10,10 +10,10 @@ JavaScript
 
 ## Execucão
 
-```
+``` bash
 git clone https://github.com/vinimdocarmo/Chacket.git
 cd Chacket
 npm install
 npm run public # rodar esse comando em um terminal
-node server
+node server # rodar esse comando em outro terminal
 ```
