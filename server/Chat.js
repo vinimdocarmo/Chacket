@@ -29,7 +29,7 @@ module.exports = class Chat {
 
         switch (data.type) {
             case 'end':
-                this.removeUser(user);
+                this.onEndConnection(user, data);
                 break;
             case 'start':
                 this.onStartConnection(user, data);
@@ -51,6 +51,11 @@ module.exports = class Chat {
             console.error('Error tryng to broadcast a message to all users');
             console.error(error);
         }
+    }
+
+    onEndConnection(user, data) {
+        this.removeUser(user);
+        this.users.forEach(user => user.socket.write(JSON.stringify(data)));
     }
 
     removeUser(user) {

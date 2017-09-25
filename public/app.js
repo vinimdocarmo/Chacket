@@ -3,7 +3,7 @@
         .module('chacketApp', ['ngRoute'])
         .controller('AppController', function ($window, ClientSession) {
             $window.onbeforeunload = function() {
-                ClientSession.get().send(JSON.stringify({ type: 'end' }));
+                ClientSession.get().send({ type: 'end' });
                 ClientSession.set(null);
             };
         })
