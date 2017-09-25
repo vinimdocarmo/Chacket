@@ -1,0 +1,18 @@
+<div>
+    <header>
+        <h2>{{$ctrl.getRoomName()}}</h2>
+    </header>
+    <div class="messages">
+        <message ng-repeat="message in messages" username="message.username">
+            <p>{{message.text}}</p>
+        </message>
+    </div>
+    <div>
+    <form>
+        <fieldset>
+            <textarea placeholder="Type your message here" ng-model="$ctrl.text"></textarea>
+            <input class="button-primary" type="submit" value="Send" ng-click="$ctrl.send()"/>
+        </fieldset>
+    </form>
+    </div>
+</div>

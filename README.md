@@ -1,18 +1,19 @@
 # Chacket
 
-## Author
+## Equipe
 
 Vinícius Magalhães do Carmo
 
-## Programming Language
+## Linguagem de Programação
 
 JavaScript
 
-## Run
+## Execucão
 
 ```
 git clone https://github.com/vinimdocarmo/Chacket.git
 cd Chacket
 npm install
-npm start
+npm run public # rodar esse comando em um terminal
+node server
 ```
