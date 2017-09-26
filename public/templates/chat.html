@@ -1,12 +1,12 @@
 <div class="container">
     <div class="row">
         <div class="column">
-            <room-list list="['general']" channel></room-list>
+            <room-list list="['general']" channel on-room-click="onRoomClick(roomName, roomType)"></room-list>
             <hr />
-            <room-list list="directRooms" direct></room-list>
+            <room-list list="directRooms" direct on-room-click="onRoomClick(roomName, roomType)"></room-list>
         </div>
         <div class="column column-80">
-            <room name="general"></room>
+            <room name="roomName" type="roomType"></room>
         </div>
         </div>
     </div>

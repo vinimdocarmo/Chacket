@@ -16,13 +16,16 @@
                 controllerAs: '$ctrl',
                 bindToController: true,
                 scope: {
-                    list: '='
+                    list: '=',
+                    onRoomClick: '&'
                 },
                 link: function (scope, element, attrs, controller) {
                     if (angular.isDefined(attrs.channel)) {
                         controller.name = 'Channels';
+                        controller.type = 'channel';
                     } else if (angular.isDefined(attrs.direct)) {
                         controller.name = 'Direct Messages';
+                        controller.type = 'direct';
                     }
                 }
             };

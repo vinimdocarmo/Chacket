@@ -2,7 +2,7 @@
 
 const _ = require('underscore');
 
-module.exports = class Channel {
+module.exports = class Room {
     constructor(name, type) {
         this.type = type;
         this.name = name;
@@ -12,6 +12,9 @@ module.exports = class Channel {
     static get type() { return { channel: 'channel', direct: 'direct' }; }
  
     add(user) {
+        if (this.type === Room.type.direct && this.users.length === 2) {
+            throw new Error('A direct room can only have 2 users');
+        }
         this.users.push(user);
     }
 

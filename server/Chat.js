@@ -78,6 +78,7 @@ module.exports = class Chat {
             if (user !== currUser) {
                 try {
                     currUser.socket.write(JSON.stringify({ type: 'start', usernames: [data.username] }));
+                    this.createDirectRoom(user, currUser);
                 } catch(error) {
                     console.error('Erro tryng do notify clients about new connection');
                     console.error(error);
@@ -88,5 +89,12 @@ module.exports = class Chat {
         const allUsernamesButMine = this.users.filter(currUser => currUser !== user).map(user => user.username);
 
         user.socket.write(JSON.stringify({ type: 'start', usernames: allUsernamesButMine }));
+    }
+
+    createDirectRoom(user1, user2) {
+        const roomName = `${user1.username}:${user2.username}`;
+        const privateRoom = new Room(roomName, Room.type.direct);
+        privateRoom.add(user1);
+        privateRoom.add(user2);
     }
 };

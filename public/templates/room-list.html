@@ -1,6 +1,6 @@
 <ul>
     <h6>{{$ctrl.name}}</h6>
     <li ng-repeat="room in $ctrl.list">
-    <a href="#">{{$ctrl.roomSymbol()}} {{room}}</a>
+    <a href="#" ng-click="$event.preventDefault();$ctrl.onRoomClick({ roomName: room, roomType: $ctrl.type })">{{$ctrl.roomSymbol()}} {{room}}</a>
     </li>
 </ul>

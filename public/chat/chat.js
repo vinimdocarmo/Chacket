@@ -12,8 +12,12 @@
                         return;
                     }
                     return function postLink(scope) {
+                        scope.roomName = 'general';
+                        scope.roomType = 'channel';
                         scope.channelRooms = ['general'];
                         scope.directRooms = [];
+
+                        scope.onRoomClick = onRoomClick;
 
                         ClientSession.get().on('data', (buffer) => {
                             $timeout(() => {
@@ -38,6 +42,11 @@
                             if (rIndex !== -1) {
                                 scope.directRooms.splice(rIndex, 1);
                             }
+                        }
+
+                        function onRoomClick(roomName, roomType) {
+                            scope.roomName = roomName;
+                            scope.roomType = roomType;
                         }
                     }
                 }
