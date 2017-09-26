@@ -25,3 +25,7 @@ npm run public # rodar esse comando em outro terminal (executar N vezes em termi
 ## Funcionalidades opcionais
 
 None
+
+## Observação
+
+Para testar messages privadas é necessário que ambos os usuários estejam com o chat em questão aberto na aba da conversa privada.
