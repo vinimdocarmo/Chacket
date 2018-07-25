@@ -1,5 +1,7 @@
 # Chacket
 
+![screenshot](https://github.com/vinimdocarmo/Chacket/blob/master/screenshot.png)
+
 ## Equipe
 
 Vinícius Magalhães do Carmo
